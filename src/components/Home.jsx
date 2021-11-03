@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../Context";
+// import Flicker from "./Flicker";
+// import Slider from "./Flicking";
 
-function Home() {
+const Home = () => {
   const { uid, agentObj, infoLoaded, isAgent, userName, isOnAgentSite } =
     useContext(Context);
 
@@ -29,10 +31,11 @@ function Home() {
 
           <div
             width="100px"
-            style={{ position: "relative", top: "700px", right: "200px" }}
+            style={{ position: "relative", left: "10vw", marginTop: "50px" }}
           >
             <Link to={`/agent-console/${agentObj.uid}`}>
               <button
+                className="custom-btn btn-5"
                 type="button"
                 style={{
                   color: "white",
@@ -78,7 +81,7 @@ function Home() {
           <p>Do you live in New York City and are just itching to declutter?</p>
           <img
             style={{
-              top: "200px",
+              // top: "200px",
               position: "relative",
               width: "700px",
               left: "75px",
@@ -93,6 +96,7 @@ function Home() {
           >
             <Link to="/browse">
               <button
+                className="custom-btn btn-5"
                 type="button"
                 style={{
                   color: "white",
@@ -135,7 +139,7 @@ function Home() {
           <p>Do you live in New York City and are just itching to declutter?</p>
           <img
             style={{
-              top: "200px",
+              // top: "200px",
               position: "relative",
               width: "700px",
               left: "75px",
@@ -146,10 +150,16 @@ function Home() {
           />
           <div
             width="100px"
-            style={{ position: "relative", top: "700px", right: "200px" }}
+            style={{
+              position: "relative",
+              left: "10vw",
+              marginTop: "20px",
+              marginBottom: "20px",
+            }}
           >
             <Link to="/browse">
               <button
+                className="custom-btn btn-5"
                 type="button"
                 style={{
                   color: "white",
@@ -167,6 +177,6 @@ function Home() {
       </div>
     );
   }
-}
+};
 
 export default Home;

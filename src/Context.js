@@ -261,7 +261,7 @@ function ContextProvider({ children }) {
 
   // spaceRef now points to "images/space.jpg"
   // imagesRef still points to "images"
-
+  const [isEditAddress, setIsEditAddress] = useState(false);
   const [authToggle, setAuthToggle] = useState(false);
   const toggleAuth = () => {
     setAuthToggle(!authToggle);
@@ -1837,6 +1837,9 @@ function ContextProvider({ children }) {
 
         functions,
         storage,
+
+        isEditAddress,
+        setIsEditAddress,
       }}
     >
       {children}

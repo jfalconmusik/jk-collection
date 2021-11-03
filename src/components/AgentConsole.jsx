@@ -89,6 +89,8 @@ function AgentConsole() {
     setShowLottieLoading,
     setShowLottieError,
     infoLoaded,
+    isEditAddress,
+    setIsEditAddress,
   } = useContext(Context);
 
   // useEffect(() => {
@@ -442,7 +444,6 @@ function AgentConsole() {
       });
   };
 
-  const [isEditAddress, setIsEditAddress] = useState(false);
   const editAddress = () => {
     setIsEditAddress(!isEditAddress);
   };
@@ -536,6 +537,7 @@ function AgentConsole() {
           <div
             id="skill-list"
             style={{
+              display: "flex",
               flexDirection: "column",
               justifyContent: "space-evenly",
             }}
@@ -742,12 +744,14 @@ function AgentConsole() {
   if (!infoLoaded || !agentObj || !agentObj.uid) {
     return (
       <div
+        className="google"
         style={{
           position: "relative",
           margin: "0 auto",
           marginTop: "20px",
           display: "flex",
           justifyContent: "column",
+          maxWidth: "80vw",
         }}
       >
         <Lottie
@@ -755,20 +759,35 @@ function AgentConsole() {
           loop
           animationData={loadingData}
           play
-          style={{ width: 150, height: 150 }}
+          style={{ width: 300, height: 300 }}
         />
       </div>
     );
   } else {
     return (
-      <div>
+      <div
+        style={{
+          width: "100vw",
+          maxWidth: "100vw",
+          display: "flex",
+          minHeight: "fit-content",
+          justifyContent: "space-between",
+          position: "relative",
+          flexDirection: `${isPortrait ? "column" : "row"}`,
+        }}
+      >
         <div
-          className="shadowed rounded"
+          // className="shadowed rounded"
           style={{
-            padding: "2em",
-            maxWidth: "92%",
-            "margin-left": "4vw",
+            display: "flex",
+            maxWidth: "100vw",
+            flexDirection: `${isPortrait ? "column" : "row"}`,
+            justifyContent: "space-between",
+            margin: "0 auto",
+
+            position: "relative",
             height: `${isLargeScreen ? "auto" : "90em"}`,
+            // flex: "3",
           }}
         >
           <h2 style={{ fontFamily: "luminari" }}>{accountTitleString}</h2>
@@ -776,27 +795,42 @@ function AgentConsole() {
             className="centered"
             style={{
               display: "flex",
-              flexDirection: `${isLargeScreen ? "row" : "column"}`,
-              left: "8vw",
-              boxSize: "border-box",
+              margin: "0 auto",
+              position: "relative",
+              flexDirection: `${!isPortrait ? "row" : "column"}`,
+              justifyContent: "space-between",
+
+              // left: "8vw",
+              // boxSize: "border-box",
             }}
           >
             <div
               className="google"
               style={{
                 flexDirection: "column",
-                maxWidth: `${isLargeScreen ? "33%" : "100%"}`,
-                padding: "5vw",
                 "box-shadow": "0px 0px 5px white",
-                // backgroundColor: "lightgray",
-                width: `${isLargeScreen ? "33%" : "99%"}`,
+                // margin: "0 auto",
+                // maxWidth: "80vw",
+                justifyContent: "space-between",
+                display: "flex",
               }}
             >
-              <div>
+              <div
+                style={{
+                  justifyContent: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  maxWidth: "100vw",
+                }}
+              >
                 <h4>Agent Console</h4>
                 <div
                   className="userAccount"
-                  style={{ display: "flex", flexDirection: "column" }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    margin: "0 auto",
+                  }}
                 >
                   <div className="innerBox">
                     <h2 className="userInfo">{displayName}</h2>
@@ -964,13 +998,6 @@ function AgentConsole() {
                           {numArr.map((index) => {
                             return (
                               <div>
-                                {/* {index > 1 && !canShow(index - 1) && (
-                                  <div>
-                                    <button type="button" disabled={true}>
-                                      {"..."}
-                                    </button>
-                                  </div>
-                                )} */}
                                 {agentPhotos.length <= index * 5 &&
                                 agentPhotos.length > (index - 1) * 5 &&
                                 (index == 1 ||
@@ -1019,7 +1046,11 @@ function AgentConsole() {
                       <p>you have no photos!</p>
                     </div>
                   )}
-                  <button type="button" onClick={() => handleAddAgentPhotos()}>
+                  <button
+                    type="button"
+                    onClick={() => handleAddAgentPhotos()}
+                    style={{ margin: "0 auto" }}
+                  >
                     Add Agent Photos
                   </button>
                   <br></br>
@@ -1027,7 +1058,7 @@ function AgentConsole() {
                     <button
                       className="tooltip"
                       style={{
-                        width: "100px",
+                        // width: "100px",
                         margin: "0 auto",
                         position: "relative",
                       }}
@@ -1035,7 +1066,10 @@ function AgentConsole() {
                       onClick={() => setShowAddress(!showAddress)}
                     >
                       {`${showAddress ? "Hide Address" : "Show Address"}`}
-                      <span class="tooltiptext">
+                      <span
+                        class="tooltiptext"
+                        style={{ textTransform: "none" }}
+                      >
                         Your address will never be shared with a client.
                       </span>
                     </button>
@@ -1092,7 +1126,18 @@ function AgentConsole() {
                     </div>
                   )}
                   {isEditAddress && (
-                    <div style={{ position: "fixed", zIndex: "99" }}>
+                    <div
+                      style={{
+                        position: "fixed",
+                        zIndex: "99",
+                        margin: "0 auto",
+                        top: "500px",
+                        // height: "50vh",
+                        maxWidth: `${isPortrait ? "" : "50vw"}`,
+                        display: "flex",
+                        // flexDirection: "column",
+                      }}
+                    >
                       <AddressForm
                         style={{ position: "relative", margin: "0 auto" }}
                         submit={true}
@@ -1101,7 +1146,11 @@ function AgentConsole() {
                       />
                     </div>
                   )}
-                  <button type="button" onClick={() => editAddress()}>
+                  <button
+                    type="button"
+                    onClick={() => editAddress()}
+                    style={{ margin: "0 auto", marginTop: "20px" }}
+                  >
                     {isEditAddress ? "Cancel" : "Change Address"}
                   </button>
 
@@ -1135,31 +1184,36 @@ function AgentConsole() {
                 </div>
               )}
               <br></br>
-              <br></br>
 
-              <div>
-                <button
-                  type="button"
-                  className="userButton button primary"
-                  style={{ maxWidth: `${isLargeScreen && "90%"}` }}
-                  onClick={() => {
-                    setSignOutDisplay(true);
-                    setShowModalCenter(true);
-                  }}
-                >
-                  Sign Out
-                </button>
-              </div>
+              <button
+                type="button"
+                // className="custom-btn btn-1"
+                style={{
+                  // maxWidth: `${isLargeScreen && "90%"}`,
+                  margin: "0 auto",
+                  position: "relative",
+                  right: `${isPortrait ? "20px" : ""}`,
+                }}
+                onClick={() => {
+                  setSignOutDisplay(true);
+                  setShowModalCenter(true);
+                }}
+              >
+                Sign Out
+              </button>
             </div>
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                maxWidth: `${isLargeScreen ? "33%" : "120%"}`,
-                "padding-left": `${isLargeScreen ? "5vw" : "0vw"}`,
-                "padding-right": `${isLargeScreen ? "5vw" : "0vw"}`,
-                "padding-top": `${isLargeScreen ? "5vw" : "1em"}`,
-                "padding-bottom": `${isLargeScreen ? "5vw" : "0vw"}`,
+                minWidth: `${isPortrait ? "100vw" : ""}`,
+                width: `${isPortrait ? "100vw" : ""}`,
+                maxWidth: "100vw",
+                padding: "20px",
+                // "padding-left": `${isLargeScreen ? "5vw" : "0vw"}`,
+                // "padding-right": `${isLargeScreen ? "5vw" : "0vw"}`,
+                // "padding-top": `${isLargeScreen ? "5vw" : "1em"}`,
+                // "padding-bottom": `${isLargeScreen ? "5vw" : "0vw"}`,
               }}
             >
               <div
@@ -1171,15 +1225,31 @@ function AgentConsole() {
                   className="google"
                   style={{
                     flexDirection: "column",
-                    maxWidth: `${isLargeScreen ? "33%" : "100%"}`,
-                    padding: "5vw",
+                    // minWidth: `${isPortrait ? "75vw" : ""}`,
+                    // padding: "5vw",
                     "box-shadow": "0px 0px 5px white",
                     // backgroundColor: "lightgray",
-                    width: `${isLargeScreen ? "33%" : "99%"}`,
+                    width: `${isPortrait ? "100vw" : ""}`,
+                    position: "relative",
+                    margin: "0 auto",
                   }}
                 >
-                  <div>
-                    <div className="innerBox">
+                  <div
+                    style={{
+                      position: "relative",
+                      margin: "0 auto",
+                      width: `${isPortrait ? "100vw" : ""}`,
+                    }}
+                  >
+                    <div
+                      className="innerBox"
+                      style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: `${isPortrait ? "100vw" : ""}`,
+                      }}
+                    >
                       {agentObj && agentObj.payRate && (
                         <p>Full day rate: {agentObj.payRate.fullDay}</p>
                       )}
@@ -1187,7 +1257,15 @@ function AgentConsole() {
                         <p>Half day rate: {agentObj.payRate.halfDay}</p>
                       )}
                     </div>
-                    <div className="innerBox">
+                    <div
+                      className="innerBox"
+                      style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: `${isPortrait ? "100vw" : ""}`,
+                      }}
+                    >
                       {agentObj && <p>Speaks...</p>}
                       <div className="innerBox">
                         {agentObj &&
@@ -1204,7 +1282,14 @@ function AgentConsole() {
                       </div>
 
                       <p>Skills...</p>
-                      <div className="innerBox">
+                      <div
+                        className="innerBox"
+                        style={{
+                          justifyContent: "center",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
                         {agentObj &&
                           agentObj.skills &&
                           agentObj.skills.cooking &&
@@ -1238,23 +1323,32 @@ function AgentConsole() {
                             </button>
                           </div>
                         )}
-                        <button type="button" onClick={() => editSkills()}>
-                          {isEditSkills ? "Cancel" : "Edit Skills"}
+                        <button
+                          type="button"
+                          onClick={() => editSkills()}
+                          style={{ margin: "0 auto" }}
+                        >
+                          {isEditSkills ? "Done" : "Edit Skills"}
                         </button>
                       </div>
                       <div className="innerBox">
-                        {agentObj && agentObj.bio && !editBio && (
-                          <div>
-                            <p>{agentObj.bio}</p>
+                        {agentObj && agentObj.bio && !isEditBio && (
+                          <div style={{ margin: "20px" }}>
+                            <p
+                              className="google"
+                              style={{ width: "50%", margin: "0 auto" }}
+                            >
+                              {agentObj.bio}
+                            </p>
                           </div>
                         )}
-                        {agentObj && agentObj.bio && editBio && (
+                        {agentObj && isEditBio && (
                           <div>
                             <input
                               type="textarea"
                               placeholder="new bio"
                               value={tempBio}
-                              onClick={(e) => {
+                              onChange={(e) => {
                                 setTempBio(e.target.value);
                               }}
                             />
@@ -1280,14 +1374,19 @@ function AgentConsole() {
                 <div
                   style={{
                     marginTop: "20px",
-                    width: `${isLargeScreen ? "auto" : "10em"}`,
-                    height: `${isLargeScreen ? "auto" : "4em"}`,
+                    minWidth: `${isPortrait ? "75vw" : ""}`,
+                    height: "fit-content",
                     right: `${isLargeScreen ? "" : ".5em"}`,
                     // "height": `${isLargeScreen ? "auto" : "3em"}`
                   }}
                   className="google"
                 >
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
                     <div
                       style={{
                         display: "flex",
@@ -1313,10 +1412,10 @@ function AgentConsole() {
                         })}
                       </div>
                       <p>
-                        Rating:
-                        {`${
+                        {"Rating: "}
+                        <span style={{ fontWeight: "bold" }}>{`${
                           agentObj.currentRating ? agentObj.currentRating : 0
-                        }`}
+                        }`}</span>
                       </p>
                     </div>
 
@@ -1339,7 +1438,13 @@ function AgentConsole() {
                 </div>
               </div>
 
-              <div>
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
                 <button
                   disabled={!isEditAvail}
                   onClick={() => {
@@ -1356,7 +1461,7 @@ function AgentConsole() {
                     setIsEditAvail(!isEditAvail);
                   }}
                 >
-                  {isEditAvail ? "Cancel" : "Edit"}
+                  {isEditAvail ? "Done" : "Edit"}
                 </button>
               </div>
 
@@ -1396,27 +1501,38 @@ function AgentConsole() {
                   </label>
                 </div>
               </span>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  top: "30px",
+                  position: "relative",
+                }}
+              >
+                <button
+                  type="button"
+                  id="deleteAccountButton"
+                  className="custom-btn btn-1"
+                  style={{
+                    maxWidth: `${isLargeScreen ? "10%" : "100%"}`,
+                    float: "right",
+                    // top: `${!isPortrait || isLargeScreen ? "10em" : "13em"}`,
+                    // "margin-top": "10em",
+                    // width: `${isLargeScreen ? "10%" : "10em"}`,
+                    minWidth: "fit-content",
+                    position: "relative",
+                    backgroundColor: "red",
+                    color: "white",
+                    border: "none",
+                  }}
+                  onClick={() => {
+                    setDeleteModal(true);
+                  }}
+                >
+                  Delete Account
+                </button>
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <button
-              type="button"
-              id="deleteAccountButton"
-              className="userButton button secondary"
-              style={{
-                maxWidth: `${isLargeScreen ? "10%" : "100%"}`,
-                float: "right",
-                top: `${!isPortrait || isLargeScreen ? "10em" : "13em"}`,
-                "margin-top": "10em",
-                width: `${isLargeScreen ? "10%" : "10em"}`,
-                position: `${isLargeScreen ? "" : "relative"}`,
-              }}
-              onClick={() => {
-                setDeleteModal(true);
-              }}
-            >
-              Delete Account
-            </button>
           </div>
         </div>
         <br></br>

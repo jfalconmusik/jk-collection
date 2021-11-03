@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../Context";
 
 function Footer() {
+  const { isPortrait } = useContext(Context);
+
   return (
     <nav
       className="footer"
@@ -10,52 +13,188 @@ function Footer() {
         display: "flex",
         flexDirection: "row",
         maxHeight: "60px",
+        width: "100vw",
+        marginTop: "1000px",
       }}
     >
-      <Link to="/privacy-policy" className="li">
-        <h2
-          style={{ textDecoration: "none", color: "black" }}
-          className="footItem"
-        >
-          Privacy Policy
-        </h2>
-      </Link>
-      <Link to="/terms-of-service" className="li">
-        <h2
-          className="footItem"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          Terms of Service
-        </h2>
-      </Link>
-      <Link to="/contact" className="li">
-        <h2
-          className="footItem"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          Contact Us
-        </h2>
-      </Link>
-      <a href="https://www.facebook.com/jivaoriginals">
-        <img
-          alt="jiva facebook page"
-          src="https://firebasestorage.googleapis.com/v0/b/jiva-website-405ed.appspot.com/o/fb2.svg?alt=media&token=0cc8b80d-8da9-43d4-9767-0248c8669473"
-          width="30em"
-          style={{ position: "relative", top: "20px" }}
-          height="auto"
-        ></img>
-      </a>
-      <a
-        style={{ position: "relative", margin: "30px" }}
-        href="https://jiva-originals.myshopify.com"
+      {isPortrait && (
+        <div className="row headerItem" style={{ zIndex: "90" }}>
+          <img
+            className="socialIcon"
+            width="20px"
+            alt="pinterest"
+            src="https://i.ibb.co/5Bb3gHX/pinterest-social-logo.png"
+          />
+          <img
+            className="socialIcon"
+            width="20px"
+            src="https://i.ibb.co/MhrzBKH/twitter.png"
+            alt="twitter"
+            border="0"
+          />
+          <img
+            className="socialIcon"
+            width="20px"
+            src="https://i.ibb.co/gP4RKF8/facebook.png"
+            alt="facebook"
+            border="0"
+          />
+          <img
+            className="socialIcon"
+            width="20px"
+            src="https://i.ibb.co/nMcYrk9/instagram.png"
+            alt="instagram"
+            border="0"
+          />
+        </div>
+      )}
+      <div
+        style={{
+          margin: "0 auto",
+          position: "relative",
+          display: `flex`,
+          flexDirection: `row`,
+          right: `${isPortrait ? "90px" : ""}`,
+          justifyContent: `${isPortrait ? "space-around" : "space-evenly"}`,
+          bottom: "10px",
+          maxWidth: "100vw",
+        }}
       >
-        <img
-          width="30em"
-          height="auto"
-          alt="shopify"
-          src="https://firebasestorage.googleapis.com/v0/b/jiva-website-405ed.appspot.com/o/svg%2Fshopify_glyph.svg?alt=media&token=1ea3c119-71d3-41d9-95a7-9b810f66d3bf"
-        ></img>
-      </a>
+        <Link to="/privacy-policy">
+          <button
+            type="button"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              whiteSpace: "nowrap",
+              color: "pink",
+              display: `${isPortrait ? "none" : "flex"}`,
+            }}
+            className="custom-btn btn-6"
+          >
+            Privacy Policy
+          </button>
+        </Link>
+        <Link to="/terms-of-service">
+          <button
+            className="custom-btn btn-6"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              paddingLeft: `${isPortrait ? "0px" : "20px"}`,
+              paddingRight: `${isPortrait ? "0px" : "20px"}`,
+              whiteSpace: "nowrap",
+              color: "pink",
+              display: `${isPortrait ? "none" : "flex"}`,
+            }}
+          >
+            Terms of Service
+          </button>
+        </Link>
+        <Link to="/contact">
+          <button
+            className="custom-btn btn-6"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              whiteSpace: "nowrap",
+              color: "pink",
+              display: `${isPortrait ? "none" : "flex"}`,
+            }}
+          >
+            Contact Us
+          </button>
+        </Link>
+
+        <button
+          className="custom-btn btn-1"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            width: "fit-content",
+            whiteSpace: "nowrap",
+            paddingLeft: `${isPortrait ? "10px" : "20px"}`,
+            paddingRight: `${isPortrait ? "10px" : "20px"}`,
+          }}
+        >
+          <a href="" style={{ position: "relative", bottom: "7px" }}>
+            <img
+              alt="jiva facebook page"
+              src="https://i.ibb.co/gP4RKF8/facebook.png"
+              width="30em"
+              // style={{ position: "relative", top: "20px" }}
+              height="auto"
+            ></img>
+          </a>
+        </button>
+
+        <button
+          className="custom-btn btn-1"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            width: "fit-content",
+            whiteSpace: "nowrap",
+            paddingLeft: `${isPortrait ? "10px" : "20px"}`,
+            paddingRight: `${isPortrait ? "10px" : "20px"}`,
+          }}
+        >
+          <a style={{ position: "relative", bottom: "7px" }} href="">
+            <img
+              width="30em"
+              height="auto"
+              alt="instagram"
+              src="https://i.ibb.co/nMcYrk9/instagram.png"
+            ></img>
+          </a>
+        </button>
+
+        <button
+          className="custom-btn btn-1"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            width: "fit-content",
+            whiteSpace: "nowrap",
+            paddingLeft: `${isPortrait ? "10px" : "20px"}`,
+            paddingRight: `${isPortrait ? "10px" : "20px"}`,
+          }}
+        >
+          <a style={{ position: "relative", bottom: "6px" }} href="">
+            <img
+              width="30em"
+              height="auto"
+              alt="pinterest"
+              src="https://i.ibb.co/5Bb3gHX/pinterest-social-logo.png"
+            ></img>
+          </a>
+        </button>
+
+        <button
+          className="custom-btn btn-1"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            width: "fit-content",
+            whiteSpace: "nowrap",
+            paddingLeft: `${isPortrait ? "10px" : "20px"}`,
+            paddingRight: `${isPortrait ? "10px" : "20px"}`,
+          }}
+        >
+          <a style={{ position: "relative", bottom: "5px" }} href="">
+            <img
+              width="30em"
+              height="auto"
+              alt="twitter"
+              src="https://i.ibb.co/MhrzBKH/twitter.png"
+            ></img>
+          </a>
+        </button>
+      </div>
     </nav>
   );
 }

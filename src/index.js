@@ -9,6 +9,7 @@ import {
   useParams,
 } from "react-router-dom";
 import "./index.css";
+import "./index.scss";
 import { ContextProvider } from "./Context";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

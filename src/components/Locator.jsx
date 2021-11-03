@@ -6,7 +6,7 @@ import { Context } from "../Context";
 const Locator = () => {
   const { homeAddress } = useContext(Context);
 
-  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+  // const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   const google = window.google;
   const geocoder = new google.maps.Geocoder();

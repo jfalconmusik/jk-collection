@@ -6,6 +6,7 @@ import React, {
   useRef,
   useLocation,
   useHistory,
+  createRef,
 } from "react";
 import {
   BrowserRouter as Router,
@@ -47,6 +48,7 @@ import TicketsAgent from "./components/TicketsAgent.jsx";
 import TicketsUser from "./components/TicketsUser.jsx";
 import HistoryAgent from "./components/HistoryAgent";
 import HistoryUser from "./components/HistoryUser";
+import useScrollPosition from "@react-hook/window-scroll";
 
 const listTodos = `query listTodos {
   listTodos{
@@ -78,8 +80,9 @@ const App = () => {
   /*
 This app contains the rudiments of an ecommerce website.
 
-- Test...
-- responsive...
+- Stylize => list cards, home pages, browse menus and switches, become an agent, checkout and address forms
+- One by one, rewrite server functions and server global variables
+- Test & create test data...
 - Create a demo video (then share with Jack)- pitch about maintaining the site, picking an admin, etc. 
 - Complete hosting. Ask Jack what domain he wants. Plug in live keys.
 
@@ -141,6 +144,7 @@ This app contains the rudiments of an ecommerce website.
     setOnAccount,
     styleColors,
     handleSidebar,
+    isOnAgentSite,
   } = useContext(Context);
 
   // const location = useLocation();
@@ -185,37 +189,6 @@ This app contains the rudiments of an ecommerce website.
     });
   };
 
-  // async function signUp() {
-  //   try {
-  //     const { user } = await Auth.signUp({
-  //       // username,
-  //       // password,
-  //       // attributes: {
-  //       //     email,          // optional
-  //       //     phone_number,   // optional - E.164 number convention
-  //       // other custom attributes
-  //       // }
-  //     });
-  //     console.log(user);
-  //   } catch (error) {
-  //     console.log("error signing up:", error);
-  //   }
-  // }
-
-  // async function signIn() {
-  //   try {
-  //       const user = await Auth.signIn(username = "username", password = "password");
-  //   } catch (error) {
-  //       console.log('error signing in', error);
-  //   }
-  // }
-
-  // async function signOut() {
-  //   try {
-  //     await Auth.signOut();
-  //   } catch (error) {
-  //     console.log("error signing out: ", error);
-  //   }
   // }
 
   const [selected, setSelected] = useState([]);
@@ -492,6 +465,17 @@ This app contains the rudiments of an ecommerce website.
       setShowMenuHome(false);
     }
   }, [showMenuShop]);
+
+  const scrollY = useScrollPosition(60);
+
+  useEffect(() => {
+    let header = document.getElementById("header");
+    if (scrollY == 0) {
+      header.classList.add("headerShadow");
+    } else {
+      header.classList.remove("headerShadow");
+    }
+  }, [scrollY]);
 
   return (
     <div className="App">

@@ -27,7 +27,6 @@ const Modal = () => {
     "pk_test_51JmfSfIMVSRR1M7sPszwzT4NfBhywyysiLoomEnCGuP56ahIW9e5ZCNDfNSE8VnkRYXAelAtRSPP6XvsRyZIPR7e001sB2BL7J"
   );
 
-
   const [processError, setProcessError] = useState(false);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 
@@ -168,8 +167,6 @@ const Modal = () => {
     setReviewSuccess,
   } = useContext(Context);
 
-
-
   const CARD_ELEMENT_OPTIONS = {
     style: {
       base: {
@@ -195,14 +192,11 @@ const Modal = () => {
     },
   };
 
-
   const [order, setOrder] = useState({});
 
   const [totalCost, setTotalCost] = useState(0);
 
-  
   const [fullDayChecked, setFullDayChecked] = useState(true);
-
 
   useEffect(() => {
     if (agentDoc && agentDoc.payRate) {
@@ -674,12 +668,15 @@ const Modal = () => {
 
   return (
     <div
-      className="modalCenter"
+      className="modalCenter box-inset"
       id="modalCenter"
       style={{
         // top: `${isLargeScreen ? "16.5vw" : "75vw"}`,
         // left: `${isLargeScreen ? "30vw" : "5vw"}`,
-        right: `${isSmallScreen || isPortrait ? "80vw" : "60vw"}`,
+        // right: `${isSmallScreen || isPortrait ? "80vw" : "60vw"}`,
+        margin: "0 auto",
+        position: "fixed",
+        marginRight: `${isPortrait ? "60vw" : ""}`,
         fontSize: `${isLargeScreen ? "initial" : "small"}`,
         display: `${showModalCenter ? "flex" : "none"}`,
         flexDirection: "column",
@@ -691,7 +688,7 @@ const Modal = () => {
           <p>
             Something's not right with the information you've sent us. This
             usually means your access code wasn't correct, or wasn't completely
-            visible. Tis could also happen because you look significantly
+            visible. This could also happen because you look significantly
             different in your verification photo than in your profile photo.
             Please reapply to become an agent with JK Domestic Collection.
           </p>
@@ -730,7 +727,7 @@ const Modal = () => {
           </button>
         </div>
       )}
-      {isReplacePhoto && (
+      {isReplacePhoto && !isSearchModal && (
         <div>
           <p>Choose your new profile photo:</p>
           <div style={{ flexDirection: "column" }}>

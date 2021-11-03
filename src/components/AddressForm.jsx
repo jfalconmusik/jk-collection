@@ -18,6 +18,8 @@ const AddressForm = (props) => {
     isSavePhoto,
     setShowModalCenter,
     userName,
+    isEditAddress,
+    setIsEditAddress,
   } = useContext(Context);
 
   const [address2, setAddress2] = useState(false);
@@ -455,6 +457,13 @@ const AddressForm = (props) => {
             Save Address
           </button>
         )}
+        <button
+          type="button"
+          className="custom-btn btn-1"
+          onClick={() => setIsEditAddress(false)}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

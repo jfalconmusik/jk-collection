@@ -89,6 +89,7 @@ function Account() {
     infoLoaded,
     isDesktopOrLaptop,
     isBigScreen,
+    setIsOnAgentSite,
   } = useContext(Context);
 
   // useEffect(() => {
@@ -399,37 +400,51 @@ function Account() {
         <AddressForm submit={true} photo={true} editName={true} />
       </div>
     );
-  } else if (!infoLoaded || !uid) {
+  } else if (!infoLoaded) {
     return (
       <div
+        className="google"
         style={{
           position: "relative",
           margin: "0 auto",
           marginTop: "20px",
           display: "flex",
           justifyContent: "column",
+          maxWidth: "80vw",
         }}
       >
-        {" "}
         <Lottie
           className="lottie"
           loop
           animationData={loadingData}
           play
-          style={{ width: 150, height: 150 }}
+          style={{ width: 300, height: 300 }}
         />
       </div>
     );
   } else if (uid && homeAddress) {
     return (
-      <div>
+      <div
+        className=""
+        style={{
+          display: "flex",
+          position: "relative",
+          justifyContent: "space-evenly",
+          flexDirection: `column`,
+        }}
+      >
         <div
           className="shadowed rounded"
           style={{
             padding: "2em",
             maxWidth: "92%",
-            "margin-left": "4vw",
+            marginLeft: `${isPortrait ? "none" : "initial"}`,
+            left: `${isPortrait ? "-10vw" : "8vw"}`,
             height: `${isLargeScreen ? "auto" : "90em"}`,
+            display: "flex",
+            position: "relative",
+            justifyContent: "space-evenly",
+            flexDirection: `column`,
           }}
         >
           <h2 style={{ fontFamily: "luminari" }}>{accountTitleString}</h2>
@@ -437,8 +452,8 @@ function Account() {
             className="centered"
             style={{
               display: "flex",
-              flexDirection: `${isLargeScreen ? "row" : "column"}`,
-              left: "8vw",
+              flexDirection: `${isPortrait ? "column" : "row"}`,
+              // left: `${isPortrait ? ""8vw"}`,
               boxSize: "border-box",
             }}
           >
@@ -446,11 +461,11 @@ function Account() {
               className="google"
               style={{
                 flexDirection: "column",
-                maxWidth: `${isLargeScreen ? "33%" : "100%"}`,
+                // maxWidth: `${isLargeScreen ? "33%" : "100%"}`,
                 padding: "5vw",
                 "box-shadow": "0px 0px 5px white",
                 // backgroundColor: "lightgray",
-                width: `${isLargeScreen ? "33%" : "99%"}`,
+                width: `${isPortrait ? "90vw" : ""}`,
               }}
             >
               <div>
@@ -465,16 +480,26 @@ function Account() {
                     <div style={{ flexDirection: "column" }}>
                       {isAgent && (
                         <Link to="/agent-console">
-                          <button type="button">
+                          <button
+                            onClick={() => {
+                              setIsOnAgentSite(true);
+                            }}
+                            type="button"
+                            style={{ width: "200px", position: "relative" }}
+                          >
                             Go to your Agent Console
                           </button>
                         </Link>
                       )}
                       <button
+                        classname="custom-btn btn-1"
                         type="button"
                         onClick={() => setShowUserRating(!showUserRating)}
+                        style={{ position: "relative" }}
                       >
-                        {showUserRating ? "Hide Rating" : "Show Rating"}
+                        <span style={{ width: "100px" }}>
+                          {showUserRating ? "Hide Rating" : "Show Rating"}
+                        </span>
                       </button>
                     </div>
 
@@ -521,6 +546,8 @@ function Account() {
                           color: "black",
                           display: "none",
                           position: "absolute",
+                          width: "fit-content",
+                          height: "fit-content",
                         }}
                         onClick={() => {
                           setShowModalCenter(true);
@@ -529,21 +556,34 @@ function Account() {
                       >
                         {"^"}
                       </button>
-                      <img
-                        className="accountPhoto"
-                        id="profile-photo"
-                        src={photoURL}
-                        alt="user"
+                      <button
+                        type="button"
+                        className="custom-btn btn-1"
                         style={{
-                          height: "100px",
-                          width: "100px",
-                          margin: "0 auto",
-                          position: "relative",
+                          height: "fit-content",
+                          paddingRight: "10px",
+                          paddingLeft: "10px",
+                          // height: "170px",
+                          width: "200px",
                         }}
-                      />
+                      >
+                        <img
+                          className="accountPhoto"
+                          id="profile-photo"
+                          src={photoURL}
+                          alt="user"
+                          style={{
+                            height: "210px",
+                            width: "210px",
+                            margin: "0 auto",
+                            position: "relative",
+                          }}
+                        />
+                      </button>
                     </div>
                   </div>
                   <button
+                    classname="custom-btn btn-1"
                     id="replace-photo"
                     type="button"
                     style={{
@@ -620,11 +660,15 @@ function Account() {
                                   <button
                                     id={deleteId}
                                     type="button"
+                                    className="custom-btn btn-1"
                                     style={{
                                       backgroundColor: "red",
                                       color: "white",
                                       display: "none",
                                       position: "absolute",
+                                      width: "fit-content",
+                                      height: "fit-content",
+                                      fontSize: "large",
                                     }}
                                     onClick={() => {
                                       handleDeletePhoto();
@@ -649,6 +693,10 @@ function Account() {
 
                         <div style={{ display: "flex", flexDirection: "row" }}>
                           <button
+                            style={{
+                              width: "fit-content",
+                              height: "fit-content",
+                            }}
                             type="button"
                             onClick={() => handlePageNum("previous")}
                           >
@@ -657,13 +705,6 @@ function Account() {
                           {numArr.map((index) => {
                             return (
                               <div>
-                                {/* {index > 1 && !canShow(index - 1) && (
-                                  <div>
-                                    <button type="button" disabled={true}>
-                                      {"..."}
-                                    </button>
-                                  </div>
-                                )} */}
                                 {homePhotos.length <= index * 5 &&
                                 homePhotos.length > (index - 1) * 5 &&
                                 (index == 1 ||
@@ -676,6 +717,10 @@ function Account() {
                                   index == pageNum + 2 ||
                                   index == pageNum - 2) ? (
                                   <button
+                                    style={{
+                                      width: "fit-content",
+                                      height: "fit-content",
+                                    }}
                                     type="button"
                                     onClick={() => handlePageNum(index)}
                                   >{`${index}`}</button>
@@ -698,6 +743,10 @@ function Account() {
                             );
                           })}
                           <button
+                            style={{
+                              width: "fit-content",
+                              height: "fit-content",
+                            }}
                             type="button"
                             disabled={{}}
                             onClick={() => handlePageNum("next")}
@@ -712,14 +761,18 @@ function Account() {
                       <p>you have no photos!</p>
                     </div>
                   )}
-                  <button type="button" onClick={() => handleAddPhotos()}>
+                  <button
+                    type="button"
+                    onClick={() => handleAddPhotos()}
+                    style={{ margin: "0 auto", marginTop: "20px" }}
+                  >
                     Add Photos
                   </button>
                   <br></br>
                   {homeAddress.length > 0 ? (
                     <button
                       style={{
-                        width: "100px",
+                        // width: "100px",
                         margin: "0 auto",
                         position: "relative",
                       }}
@@ -827,7 +880,7 @@ function Account() {
                 <button
                   type="button"
                   className="userButton button primary"
-                  style={{ maxWidth: `${isLargeScreen && "90%"}` }}
+                  //
                   onClick={() => {
                     setSignOutDisplay(true);
                     setShowModalCenter(true);
@@ -841,7 +894,7 @@ function Account() {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                maxWidth: `${isLargeScreen ? "33%" : "120%"}`,
+                // maxWidth: `${isLargeScreen ? "33%" : "120%"}`,
                 "padding-left": `${isLargeScreen ? "5vw" : "0vw"}`,
                 "padding-right": `${isLargeScreen ? "5vw" : "0vw"}`,
                 "padding-top": `${isLargeScreen ? "5vw" : "1em"}`,
@@ -857,26 +910,18 @@ function Account() {
                 <button
                   type="button"
                   style={{
-                    fontSize: "x-large",
-                    width: `${isLargeScreen ? "auto" : "10em"}`,
-                    height: `${isLargeScreen ? "auto" : "4em"}`,
-                    right: `${isLargeScreen ? "" : ".5em"}`,
+                    fontSize: "large",
+                    // width: "fit-content",
+                    height: `50px`,
+                    color: "pink",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                    // right: `${isLargeScreen ? "" : ".5em"}`,
                     // "height": `${isLargeScreen ? "auto" : "3em"}`
                   }}
-                  className="userButton button primary"
+                  className="custom-btn btn-5"
                 >
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                    <img
-                      alt=""
-                      // width={`${isLargeScreen ? "30%" : "20%"}`}
-                      // height="auto"
-                      // style={{
-                      //   bottom: ".2em",
-                      //   position: "relative",
-                      //   right: ".5em",
-                      // }}
-                      src=""
-                    />
                     <div
                       style={{
                         display: "flex",
@@ -888,9 +933,12 @@ function Account() {
                         <div>
                           <Link
                             to={`/user-history/${uid}`}
-                            style={{ textDecoration: "none" }}
+                            style={{
+                              textDecoration: "none",
+                              color: "pink",
+                            }}
                           >
-                            <p>View Your History</p>
+                            <span>View Your History</span>
                           </Link>
                         </div>
                       ) : (
@@ -966,7 +1014,7 @@ function Account() {
             <button
               type="button"
               id="deleteAccountButton"
-              className="userButton button secondary"
+              className="custom-btn btn-1"
               style={{
                 maxWidth: `${isLargeScreen ? "10%" : "100%"}`,
                 float: "right",
@@ -974,6 +1022,9 @@ function Account() {
                 "margin-top": "10em",
                 width: `${isLargeScreen ? "10%" : "10em"}`,
                 position: `${isLargeScreen ? "" : "relative"}`,
+                backgroundColor: "red",
+                color: "white",
+                border: "none",
               }}
               onClick={() => {
                 setDeleteModal(true);

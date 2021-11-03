@@ -120,12 +120,14 @@ const Agent = () => {
   if (!infoLoaded || !agentDoc || !agentDoc.uid) {
     return (
       <div
+        className="google"
         style={{
           position: "relative",
           margin: "0 auto",
           marginTop: "20px",
           display: "flex",
           justifyContent: "column",
+          maxWidth: "80vw",
         }}
       >
         <Lottie
@@ -133,28 +135,41 @@ const Agent = () => {
           loop
           animationData={loadingData}
           play
-          style={{ width: 150, height: 150 }}
+          style={{ width: 300, height: 300 }}
         />
       </div>
     );
   } else {
     return (
-      <div>
-        <div>
+      <div
+        style={{
+          display: "flex",
+          position: "relative",
+          justifyContent: "space-evenly",
+          flexDirection: `${isPortrait ? "column" : "row"}`,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+            justifyContent: "space-evenly",
+            flexDirection: `${isPortrait ? "column" : "row"}`,
+          }}
+        >
           <div
             className="shadowed rounded"
             style={{
+              display: "flex",
+              position: "relative",
+              justifyContent: "space-evenly",
+              flexDirection: `${isPortrait ? "column" : "row"}`,
               padding: "2em",
               maxWidth: "92%",
               "margin-left": "4vw",
               height: `${isLargeScreen ? "auto" : "90em"}`,
             }}
           >
-            {agentDoc && agentDoc.address && (
-              <h2
-                style={{ fontFamily: "luminari" }}
-              >{`${agentDoc.address[0]} ${agentDoc.address[1]}`}</h2>
-            )}
             <div
               className="centered"
               style={{
@@ -168,14 +183,25 @@ const Agent = () => {
                 className="google"
                 style={{
                   flexDirection: "column",
-                  maxWidth: `${isLargeScreen ? "33%" : "100%"}`,
+                  maxWidth: `${isPortrait ? "100%" : "33%"}`,
                   padding: "5vw",
                   "box-shadow": "0px 0px 5px white",
                   // backgroundColor: "lightgray",
                   width: `${isLargeScreen ? "33%" : "99%"}`,
                 }}
               >
-                <div>
+                {agentDoc && agentDoc.address && (
+                  <h2
+                    style={{ fontFamily: "luminari" }}
+                  >{`${agentDoc.address[0]} ${agentDoc.address[1]}`}</h2>
+                )}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: `${isPortrait ? "column" : "row"}`,
+                  }}
+                >
                   <div
                     className="userAccount"
                     style={{ display: "flex", flexDirection: "column" }}
@@ -352,7 +378,6 @@ const Agent = () => {
                     <div className="itemCard"></div>
                   </div>
                 </div>
-
                 <br></br>
                 <br></br>
               </div>
@@ -376,15 +401,29 @@ const Agent = () => {
                     className="google"
                     style={{
                       flexDirection: "column",
-                      maxWidth: `${isLargeScreen ? "33%" : "100%"}`,
-                      padding: "5vw",
+                      // width: `${isPortrait ? "100%" : "40%"}`,
+                      padding: "10vw",
                       "box-shadow": "0px 0px 5px white",
                       // backgroundColor: "lightgray",
-                      width: `${isLargeScreen ? "33%" : "99%"}`,
+                      width: `${isPortrait ? "100%" : "40%"}`,
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
-                    <div>
-                      <div className="innerBox">
+                    <div
+                      style={{
+                        paddingLeft: "50px",
+                        paddingRight: "50px",
+                        margin: "0 auto",
+                        float: "left",
+                        position: "relative",
+                        right: "7vw",
+                      }}
+                    >
+                      <div
+                        // className="innerBox"
+                        style={{ paddingLeft: "50px", paddingRight: "50px" }}
+                      >
                         {agentDoc && agentDoc.payRate && (
                           <p>Full day rate: {agentDoc.payRate.fullDay}</p>
                         )}
@@ -393,7 +432,10 @@ const Agent = () => {
                         )}
                       </div>
                       <p>Speaks...</p>
-                      <div className="innerBox">
+                      <div
+                        // className="innerBox"
+                        style={{ paddingLeft: "50px", paddingRight: "50px" }}
+                      >
                         {agentDoc &&
                           agentDoc.languages &&
                           agentDoc.languages.english && <p>English</p>}
@@ -408,7 +450,10 @@ const Agent = () => {
                       </div>
 
                       <p>Skills...</p>
-                      <div className="innerBox">
+                      <div
+                        // className="innerBox"
+                        style={{ paddingLeft: "50px", paddingRight: "50px" }}
+                      >
                         {agentDoc &&
                           agentDoc.skills &&
                           agentDoc.skills.cooking && <p>Cooking</p>}
@@ -433,15 +478,25 @@ const Agent = () => {
                 <div>
                   <div
                     style={{
+                      display: "flex",
+                      position: "relative",
+                      justifyContent: "space-evenly",
+                      flexDirection: "column",
                       marginTop: "20px",
-                      width: `${isLargeScreen ? "auto" : "10em"}`,
-                      height: `${isLargeScreen ? "auto" : "4em"}`,
-                      right: `${isLargeScreen ? "" : ".5em"}`,
+                      width: "fit-content",
+                      height: "fit-content",
                       // "height": `${isLargeScreen ? "auto" : "3em"}`
                     }}
-                    className="google"
                   >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div
+                      className="google"
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "fit-content",
+                        height: "fit-content",
+                      }}
+                    >
                       <div
                         style={{
                           display: "flex",
@@ -449,23 +504,6 @@ const Agent = () => {
                           float: "left",
                         }}
                       >
-                        <div style={{ flexDirection: "row" }}>
-                          {ratingArray.map((star) => {
-                            return (
-                              <img
-                                alt="star icon"
-                                width={`15px`}
-                                height="auto"
-                                //   style={{
-                                //     bottom: ".2em",
-                                //     position: "relative",
-                                //     right: ".5em",
-                                //   }}
-                                src="https://firebasestorage.googleapis.com/v0/b/j-collection.appspot.com/o/icons%2F5_point_star.png?alt=media&token=0bbffa05-ddb6-44d1-9f43-4bf4452b69c6"
-                              />
-                            );
-                          })}
-                        </div>
                         <p>
                           Rating:
                           {`${
@@ -514,6 +552,7 @@ const Agent = () => {
                     </div>
                     <div
                       style={{
+                        display: "flex",
                         marginTop: "20px",
                         flexDirection: "column",
                         // "height": `${isLargeScreen ? "auto" : "3em"}`
@@ -522,13 +561,21 @@ const Agent = () => {
                     >
                       {agentDoc.bookingPeriod &&
                         agentDoc.bookingPeriod.sameDay && (
-                          <button onClick={() => bookAgent("today", cost)}>
+                          <button
+                            onClick={() => bookAgent("today", cost)}
+                            className="custom-btn btn-5"
+                            style={{ color: "pink" }}
+                          >
                             Book Today!
                           </button>
                         )}
                       {agentDoc.bookingPeriod &&
                         agentDoc.bookingPeriod.nextDay && (
-                          <button onClick={() => bookAgent("tomorrow", cost)}>
+                          <button
+                            onClick={() => bookAgent("tomorrow", cost)}
+                            className="custom-btn btn-5"
+                            style={{ color: "pink" }}
+                          >
                             Book Tomorrow!
                           </button>
                         )}
@@ -538,6 +585,8 @@ const Agent = () => {
                             setShowModalCenter(true);
                             setIsCheckAvailability(true);
                           }}
+                          className="custom-btn btn-5"
+                          style={{ color: "pink" }}
                         >
                           Check Availability
                         </button>

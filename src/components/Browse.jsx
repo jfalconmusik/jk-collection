@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 // } from "aws-amplify";
 import { Loader } from "@googlemaps/js-api-loader";
 import { Context } from "../Context";
+import Card from "./Card";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Lottie from "react-lottie-player";
 import loadingData from "../8682-loading.json";
@@ -50,6 +51,7 @@ const Browse = () => {
   const [distLimit, setDistLimit] = useState(0);
 
   const [agentList, setAgentList] = useState([]);
+
   useEffect(() => {
     if (searchList && searchList.length > 0) {
       let newList = searchList;
@@ -208,8 +210,14 @@ const Browse = () => {
     );
   } else if (agentList && agentList.length >= 0) {
     return (
-      <div className="Browse">
-        <div style={{ flexDirection: "column" }}>
+      <div className="Browse box-invert" style={{ paddingBottom: "100px" }}>
+        <div
+          style={{
+            flexDirection: "column",
+            top: "100px",
+            position: "relative",
+          }}
+        >
           <p>I am looking for: </p>
           <div
             style={{
@@ -347,14 +355,27 @@ const Browse = () => {
             </div>
           </div>
 
-          <div>
+          <div
+            style={{
+              top: `${isPortrait ? "170px" : "70px"}`,
+              position: "relative",
+              zIndex: "95",
+            }}
+          >
             <button
+              className="custom-btn btn-5"
+              style={{
+                color: "pink",
+                padding: "20px",
+                fontSize: "x-large",
+                height: "100px",
+              }}
               type="button"
               onClick={() => {
                 handleSearch();
               }}
             >
-              Search Domestics!
+              Search Domestics
             </button>
           </div>
         </div>
@@ -362,19 +383,31 @@ const Browse = () => {
           {agentList && agentList.length > 0 && (
             <div
               className="Browse"
-              style={{ flexDirection: "row", display: "flex" }}
+              style={{
+                flexDirection: "row",
+                display: "flex",
+                pointerEvents: "all",
+              }}
             >
-              <div>
+              <div style={{ zIndex: "96" }}>
                 <p>Sort:</p>
                 <select
                   onClick={(e) => {
                     sortType(e.target.value);
                   }}
                 >
-                  <option value="price" selected={sortPrice}>
+                  <option
+                    value="price"
+                    selected={sortPrice}
+                    style={{ zIndex: "96" }}
+                  >
                     Price
                   </option>
-                  <option value="distance" selected={sortDistance}>
+                  <option
+                    value="distance"
+                    selected={sortDistance}
+                    style={{ zIndex: "96" }}
+                  >
                     Distance
                   </option>
                 </select>
@@ -390,7 +423,11 @@ const Browse = () => {
                     High to Low
                   </option>
                 </select>
-                <button type="button" onClick={() => handleShowAgents()}>
+                <button
+                  type="button"
+                  onClick={() => handleShowAgents()}
+                  style={{ pointerEvents: "all", zIndex: "96" }}
+                >
                   {showResults ? "Clear Results" : "Show Results"}
                 </button>
               </div>
@@ -409,169 +446,9 @@ const Browse = () => {
           }}
         >
           {agentList && agentList.length >= 0 && showResults ? (
-            agentList.map((agent, i) => {
-              let photoId = `agent-photo-${i}`;
-              let data = agent.data;
-
-              getDownloadURL(ref(storage, data.profilePhoto))
-                .then((downloadURL) => {
-                  document
-                    .getElementById(photoId)
-                    .setAttribute("src", downloadURL);
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-
-              let address = data.address;
-              let name = `${address[0]} ${address[1]}`;
-              return (
-                <Link
-                  style={{
-                    backgroundColor: styleColors.altPink,
-                    padding: "20px",
-                    display: "flex",
-                    flexDirection: `${
-                      isPortrait || !isLargeScreen ? "column" : "row"
-                    }`,
-                    justifyContent: "space-evenly",
-                    overflowX: "hidden",
-                    marginTop: "10px",
-                    borderRadius: "10px",
-                  }}
-                  to={`/book-agent/${data.uid}`}
-                  onClick={() => {
-                    setAgentDoc({});
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      maxWidth: "20vw",
-                      justifyContent: "space-evenly",
-                    }}
-                  >
-                    <div
-                      style={{
-                        flexDirection: "row",
-                        display: "flex",
-                      }}
-                    >
-                      <img
-                        width="100px"
-                        height="100px"
-                        src=""
-                        id={photoId}
-                        alt="agent profile"
-                      ></img>
-
-                      {data.bio && <p>{data.bio}</p>}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      maxWidth: "20vw",
-                    }}
-                  >
-                    <div
-                      style={{
-                        flexDirection: "row",
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      {agent.name && (
-                        <p style={{ fontWeight: "bold" }}>{agent.name}</p>
-                      )}
-                      {agent.distance && <p>{`${agent.distance} away`}</p>}
-                      {agent.duration && <p>{agent.duration}</p>}
-                      {data.payRate && (
-                        <p
-                          style={{ fontWeight: "bold" }}
-                        >{`$${data.payRate.fullDay}`}</p>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        flexDirection: "row",
-                        display: "flex",
-                        maxWidth: "20vw",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      {data.skills && data.skills.housekeeping && (
-                        <p
-                          style={{
-                            color: `${housekeepingChecked ? "green" : "black"}`,
-                          }}
-                        >
-                          <span>{housekeepingChecked ? "✓" : ""}</span>
-                          Housekeeping
-                        </p>
-                      )}
-                      {data.skills && data.skills.gardening && (
-                        <p
-                          style={{
-                            color: `${gardeningChecked ? "green" : "black"}`,
-                          }}
-                        >
-                          <span>{gardeningChecked ? "✓" : ""}</span>Gardening
-                        </p>
-                      )}
-                      {data.skills && data.skills.cooking && (
-                        <p
-                          style={{
-                            color: `${cookingChecked ? "green" : "black"}`,
-                          }}
-                        >
-                          <span>{cookingChecked ? "✓" : ""}</span>Cooking
-                        </p>
-                      )}
-                      {data.skills && data.skills.laundry && (
-                        <p
-                          style={{
-                            color: `${laundryChecked ? "green" : "black"}`,
-                          }}
-                        >
-                          <span>{laundryChecked ? "✓" : ""}</span>Laundry
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      maxWidth: "20vw",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div
-                      style={{
-                        flexDirection: "row",
-                        display: "flex",
-                      }}
-                    >
-                      <p>Rating: </p>
-                      {data.currentRating && (
-                        <p style={{ fontWeight: "bold" }}>
-                          {data.currentRating}
-                        </p>
-                      )}
-                      {data.languages && data.languages.english && (
-                        <p>English</p>
-                      )}
-                      {data.languages && data.languages.spanish && (
-                        <p>Spanish</p>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              );
-            })
+            agentList.map((agent, i) => (
+              <Card profile={agent} index={i} typeCase={"agent"} />
+            ))
           ) : (
             <div
               style={{

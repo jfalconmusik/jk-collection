@@ -54,7 +54,7 @@ function Header() {
       <div
         className="row"
         style={{
-          right: "6vw",
+          // right: "6vw",
           position: "relative",
           margin: "0 auto",
           justifyContent: "space-evenly",
@@ -82,33 +82,10 @@ function Header() {
               margin: "0 auto",
               display: "flex",
               flexDirection: "row",
-              top: "100px",
+              bottom: "60px",
               justifyContent: "center",
             }}
           >
-            <button
-              onClick={() => handleSidebar()}
-              style={{
-                "z-index": "99",
-                "font-size": "larger",
-                // top: ".75em",
-                float: "right",
-
-                width: "8vw",
-                height: "10vw",
-                position: "relative",
-                color: "pink",
-                backgroundColor: "white",
-                pointerEvents: "all",
-                // paddingRight: "-50px",
-                display: `${isPortrait ? "initial" : "none"}`,
-              }}
-              data-toggle="example-menu"
-              className="hide-for-large menu-icon"
-              type="button"
-            >
-              ☰
-            </button>
             <div
               style={{
                 display: "flex",
@@ -117,6 +94,7 @@ function Header() {
               }}
             >
               <Link
+                style={{ pointerEvents: "none" }}
                 className="headerItem"
                 to="/"
                 onMouseOver={() => setShowMenuHome(true)}
@@ -130,7 +108,9 @@ function Header() {
                     height: "150px",
                     width: "400px",
                     objectFit: "cover",
+                    top: `${isPortrait ? "160px" : "80px"}`,
                     margin: "0 auto",
+                    zIndex: "98",
                   }}
                   className="logo"
                   src="https://i.ibb.co/xzRRZyf/untitled-1.png"
@@ -142,16 +122,21 @@ function Header() {
                   flexDirection: "row",
                   justifyContent: "center",
                   margin: "0 auto",
+                  marginBottom: "150px",
                   display: "flex",
-                  bottom: "300px",
+                  bottom: "10vw",
                   position: "relative",
+
+                  // overflowY: "hidden",
                 }}
               >
                 {isOnAgentSite ? (
-                  <div
+                  <span
                     style={{
+                      // bottom: "250px",
                       pointerEvents: "none",
-                      position: "relative",
+                      position: "absolute",
+                      display: `${isPortrait ? "none" : "flex"}`,
                       justifyContent: "space-between",
                       flexDirection: "row",
                       textDecoration: "none",
@@ -183,7 +168,12 @@ function Header() {
                         }}
                         to={`/agent-appointments/${uid}`}
                       >
-                        <span className="shimmerText">Jobs</span>
+                        <button
+                          className="custom-btn btn-1"
+                          style={{ zIndex: "99", backgroundColor: "white" }}
+                        >
+                          Jobs
+                        </button>
                       </Link>
                     </div>
 
@@ -204,19 +194,26 @@ function Header() {
                         }}
                         to="/agent-console"
                       >
-                        <span className="shimmerText">Console</span>
+                        <button
+                          className="custom-btn btn-1"
+                          style={{ backgroundColor: "white" }}
+                        >
+                          Console
+                        </button>
                       </Link>
                     </div>
-                  </div>
+                  </span>
                 ) : (
-                  <div
+                  <span
                     style={{
+                      // bottom: "250px",
                       pointerEvents: "none",
-                      position: "relative",
+                      position: "absolute",
                       justifyContent: "space-between",
                       flexDirection: "row",
                       // maxWidth: `${isPortrait ? "100vw" : "50vw"}`,
                       textDecoration: "none",
+                      display: `${isPortrait ? "none" : "flex"}`,
                       margin: "0 auto",
                     }}
                     // onMouseOver={() => setShowMenuShop(true)}
@@ -245,7 +242,9 @@ function Header() {
                         }}
                         to={`/user-appointments/${uid}`}
                       >
-                        <span className="shimmerText">Appointments</span>
+                        <button className="custom-btn btn-1">
+                          Appointments
+                        </button>
                       </Link>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -267,7 +266,7 @@ function Header() {
                         // className="show-for-large"
                         id="shopId"
                       >
-                        <span className="shimmerText">Browse</span>
+                        <button className="custom-btn btn-1">Browse</button>
                       </Link>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -287,116 +286,174 @@ function Header() {
                         }}
                         to="/account"
                       >
-                        <span className="shimmerText">Account</span>
+                        <button className="custom-btn btn-1">Account</button>
                       </Link>
                     </div>
+                  </span>
+                )}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  right: "0vw",
+                  // left: "1vw",
+                  // bottom: "5px"
+                  // top: "75px",
+                }}
+              >
+                <button
+                  onClick={() => handleSidebar()}
+                  style={{
+                    border: "none",
+                    zIndex: "99",
+                    // right: "10vw",
+                    margin: "0px",
+                    top: "55px",
+                    right: "10px",
+                    height: "fit-content",
+                    // left: "10px",
+                    width: "fit-content",
+                    fontSize: "xx-large",
+                    // height: "10vw",
+                    position: "relative",
+                    color: `${isOnAgentSite ? "white" : "pink"}`,
+                    backgroundColor: `${
+                      isOnAgentSite ? styleColors.altPink : "white"
+                    }`,
+                    pointerEvents: "all",
+                    // paddingRight: "-50px",
+                    display: `${isPortrait ? "initial" : "none"}`,
+                  }}
+                  data-toggle="example-menu"
+                  className="custom-btn btn-1"
+                  type="button"
+                >
+                  ☰
+                </button>
+                {uid && !isAgent && !requestRejected && (
+                  <div
+                    style={{
+                      position: "relative",
+                      top: "72px",
+                      display: `${isPortrait ? "none" : "initial"}`,
+                    }}
+                  >
+                    <button
+                      className="custom-btn btn-5"
+                      type="button"
+                      disabled={isPendingVerification}
+                      style={{
+                        whitespace: "no-wrap",
+                        width: "fit-content",
+                        marginRight: "-175px",
+                        pointerEvents: "all",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {isPendingVerification ? (
+                        "In Review"
+                      ) : (
+                        <Link to="/agent-sign-up" style={{ color: "pink" }}>
+                          Create Agent Account
+                        </Link>
+                      )}
+                    </button>
+                  </div>
+                )}
+                {uid && !isAgent && requestRejected && (
+                  <div
+                    style={{
+                      position: "relative",
+                      top: "72px",
+                      display: `${isPortrait ? "none" : "initial"}`,
+                    }}
+                  >
+                    <button
+                      className="custom-btn btn-5"
+                      onClick={() => {
+                        setShowModalCenter(true);
+                        setShowRejected(true);
+                      }}
+                      type="button"
+                      style={{
+                        whitespace: "no-wrap",
+                        marginRight: "-30px",
+                        pointerEvents: "all",
+                        textDecoration: "none",
+                        marginTop: `${
+                          !isPortrait || isLargeScreen ? "" : "30px"
+                        }`,
+                      }}
+                    >
+                      <img
+                        style={{ width: "15px", height: "15px" }}
+                        src="https://firebasestorage.googleapis.com/v0/b/j-collection.appspot.com/o/icons%2Fexclamation.jpg?alt=media&token=b0a827ba-7d62-4f20-8bc8-5ea2bc871aa4"
+                        alt="!!!"
+                      />
+                    </button>
+                  </div>
+                )}
+                {uid && isAgent && !isOnAgentSite && (
+                  <div
+                    style={{
+                      position: "relative",
+                      top: "72px",
+                      display: `${isPortrait ? "none" : "initial"}`,
+                    }}
+                  >
+                    <button
+                      className="custom-btn btn-5"
+                      type="button"
+                      disabled={isPendingVerification}
+                      onClick={() => setIsOnAgentSite(true)}
+                      style={{
+                        width: "fit-content",
+                        // whitespace: "no-wrap",
+                        marginRight: "-150px",
+                        pointerEvents: "all",
+                        textDecoration: "none",
+                        paddingLeft: "20px",
+                        paddingRight: "20px",
+                        height: "fit-content",
+                      }}
+                    >
+                      <Link to="/agent-console" style={{ color: "pink" }}>
+                        Agent Console
+                      </Link>
+                    </button>
+                  </div>
+                )}
+                {uid && isAgent && isOnAgentSite && (
+                  <div
+                    style={{
+                      position: "relative",
+                      top: "72px",
+                      display: `${isPortrait ? "none" : "initial"}`,
+                    }}
+                  >
+                    <button
+                      className="custom-btn btn-5"
+                      type="button"
+                      disabled={isPendingVerification}
+                      onClick={() => setIsOnAgentSite(false)}
+                      style={{
+                        width: "fit-content",
+                        whitespace: "no-wrap",
+                        marginRight: "-30px",
+                        pointerEvents: "all",
+                        textDecoration: "none",
+                        paddingLeft: "20px",
+                        paddingRight: "20px",
+                        height: "fit-content",
+                      }}
+                    >
+                      <Link to="/" style={{ color: "pink" }}>
+                        View User Site
+                      </Link>
+                    </button>
                   </div>
                 )}
               </div>
-            </div>
-            <div
-              style={{
-                position: "relative",
-                top: "75px",
-              }}
-            >
-              {uid && !isAgent && !requestRejected && (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <button
-                    type="button"
-                    disabled={isPendingVerification}
-                    style={{
-                      whitespace: "no-wrap",
-                      width: "150px",
-                      marginRight: "-30px",
-                      pointerEvents: "all",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {isPendingVerification ? (
-                      "In Review"
-                    ) : (
-                      <Link to="/agent-sign-up">Create Agent Account</Link>
-                    )}
-                  </button>
-                </div>
-              )}
-              {uid && !isAgent && requestRejected && (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <button
-                    onClick={() => {
-                      setShowModalCenter(true);
-                      setShowRejected(true);
-                    }}
-                    type="button"
-                    style={{
-                      whitespace: "no-wrap",
-                      marginRight: "-30px",
-                      pointerEvents: "all",
-                      textDecoration: "none",
-                      marginTop: `${
-                        !isPortrait || isLargeScreen ? "" : "30px"
-                      }`,
-                    }}
-                  >
-                    <img
-                      style={{ width: "15px", height: "15px" }}
-                      src="https://firebasestorage.googleapis.com/v0/b/j-collection.appspot.com/o/icons%2Fexclamation.jpg?alt=media&token=b0a827ba-7d62-4f20-8bc8-5ea2bc871aa4"
-                      alt="!!!"
-                    />
-                  </button>
-                </div>
-              )}
-              {uid && isAgent && !isOnAgentSite && (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <button
-                    type="button"
-                    disabled={isPendingVerification}
-                    onClick={() => setIsOnAgentSite(true)}
-                    style={{
-                      whitespace: "no-wrap",
-                      marginRight: "-30px",
-                      pointerEvents: "all",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <Link to="/agent-console">Agent Console</Link>
-                  </button>
-                </div>
-              )}
-              {uid && isAgent && isOnAgentSite && (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <button
-                    type="button"
-                    disabled={isPendingVerification}
-                    onClick={() => setIsOnAgentSite(false)}
-                    style={{
-                      whitespace: "no-wrap",
-                      marginRight: "-30px",
-                      pointerEvents: "all",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <Link to="/">View User Site</Link>
-                  </button>
-                </div>
-              )}
             </div>
           </div>
           {/* inner row for links */}
@@ -411,39 +468,7 @@ function Header() {
             // "max-height": "3.5em",
             margin: "0 auto",
           }}
-        >
-          {isPortrait && (
-            <div className="row headerItem" style={{ zIndex: "90" }}>
-              <img
-                className="socialIcon"
-                width="20px"
-                alt="pinterest"
-                src="https://i.ibb.co/5Bb3gHX/pinterest-social-logo.png"
-              />
-              <img
-                className="socialIcon"
-                width="20px"
-                src="https://i.ibb.co/MhrzBKH/twitter.png"
-                alt="twitter"
-                border="0"
-              />
-              <img
-                className="socialIcon"
-                width="20px"
-                src="https://i.ibb.co/gP4RKF8/facebook.png"
-                alt="facebook"
-                border="0"
-              />
-              <img
-                className="socialIcon"
-                width="20px"
-                src="https://i.ibb.co/nMcYrk9/instagram.png"
-                alt="instagram"
-                border="0"
-              />
-            </div>
-          )}
-        </div>
+        ></div>
         {/* sidebar button if mobile */}
       </div>
     </header>
